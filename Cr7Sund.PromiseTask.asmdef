@@ -1,0 +1,16 @@
+{
+    "name": "Cr7Sund.PromiseTask",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f890c01dea3058c4d9ea186851e37025"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
