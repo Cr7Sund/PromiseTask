@@ -6,18 +6,18 @@ namespace Cr7Sund
 {
     public sealed class WhenAllPromiseTaskSource : IPromiseTaskSource
     {
-        private int completeCount;
-        private int tasksLength;
-        private PromiseTaskCompletionSourceCore<AsyncUnit> core;
+        private int _completeCount;
+        private readonly int _tasksLength;
+        private PromiseTaskCompletionSourceCore<AsyncUnit> _core;
 
         public WhenAllPromiseTaskSource(PromiseTask[] tasks, int tasksLength)
         {
-            completeCount = 0;
-            this.tasksLength = tasksLength;
+            _completeCount = 0;
+            this._tasksLength = tasksLength;
 
             if (tasksLength == 0)
             {
-                core.TrySetResult(AsyncUnit.Default);
+                _core.TrySetResult(AsyncUnit.Default);
                 return;
             }
 
@@ -30,7 +30,7 @@ namespace Cr7Sund
                 }
                 catch (Exception ex)
                 {
-                    core.TrySetException(ex);
+                    _core.TrySetException(ex);
                     continue;
                 }
 
@@ -57,39 +57,39 @@ namespace Cr7Sund
             }
             catch (Exception ex)
             {
-                self.core.TrySetException(ex);
+                self._core.TrySetException(ex);
                 return;
             }
 
-            if (Interlocked.Increment(ref self.completeCount) == self.tasksLength)
+            if (Interlocked.Increment(ref self._completeCount) == self._tasksLength)
             {
-                self.core.TrySetResult(AsyncUnit.Default);
+                self._core.TrySetResult(AsyncUnit.Default);
             }
         }
 
         public void GetResult(short token)
         {
-            core.GetResult(token);
+            _core.GetResult(token);
         }
 
         public PromiseTaskStatus GetStatus(short token)
         {
-            return core.GetStatus(token);
+            return _core.GetStatus(token);
         }
 
         public void OnCompleted(Action continuation, short token)
         {
-            core.OnCompleted(continuation, token);
+            _core.OnCompleted(continuation, token);
         }
 
         public PromiseTaskStatus UnsafeGetStatus()
         {
-            return core.UnsafeGetStatus();
+            return _core.UnsafeGetStatus();
         }
 
         void IPromiseTaskSource.GetResult(short token)
         {
-            core.GetResult(token);
+            _core.GetResult(token);
         }
     }
 

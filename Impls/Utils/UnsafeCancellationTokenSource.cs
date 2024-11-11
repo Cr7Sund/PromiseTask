@@ -101,6 +101,10 @@ namespace Cr7Sund
             return result;
         }
 
+        /// <summary>
+        /// Cancellation is asynchronous, since some async jobs are still running after this call.
+        /// However, we ensure the clean job will be done when the async job finish 
+        /// </summary>
         public void Cancel()
         {
             ThrowIfCancel();
